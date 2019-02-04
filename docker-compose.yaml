@@ -1,0 +1,17 @@
+version: "3"
+services:
+  graphite-web:
+    build: ./graphite-web
+    environment:
+      SECRET_KEY: "not-so-secure"
+      CARBONLINK_HOSTS: "go-carbon:7002:a"
+    ports:
+    - "8080:8080"
+    volumes:
+      - ./data:/opt/graphite/storage
+  go-carbon:
+    build: ./go-carbon
+    ports:
+    - "2003:2003"
+    volumes:
+      - ./data:/opt/graphite/storage
