@@ -11,7 +11,8 @@ RUN set -ex \
     && addgroup --system --gid 105 graphite \
     && adduser --system --uid 105 --gid 105 --home /opt/graphite --no-create-home --shell /bin/false --gecos "Graphite User" graphite
 COPY --from=build /go-carbon /go-carbon
-COPY conf/ /etc/go-carbon/
+COPY opt/graphite /opt/graphite
 USER graphite
+WORKDIR /opt/graphite
 ENTRYPOINT ["/go-carbon"]
-CMD ["-config=/etc/go-carbon/go-carbon.conf", "-daemon=false"]
+CMD ["-config=/opt/graphite/go-carbon/go-carbon.conf", "-daemon=false"]

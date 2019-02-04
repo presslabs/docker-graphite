@@ -18,6 +18,7 @@ RUN set -ex \
 COPY local_settings.py /usr/local/lib/python3.7/site-packages/graphite/local_settings.py
 
 USER graphite
+WORKDIR /opt/graphite
 RUN set -ex \
     && SECRET_KEY="bootstrap" django-admin migrate --run-syncdb \
     && SECRET_KEY="bootstrap" django-admin collectstatic --no-input
