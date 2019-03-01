@@ -105,8 +105,8 @@ DEFAULT_XFILES_FACTOR = 0
 #AUTO_REFRESH_INTERVAL = 60
 
 # Timeouts for find and render requests
-#FIND_TIMEOUT = 3.0  # Timeout for metric find requests
-#FETCH_TIMEOUT = 3.0  # Timeout to fetch series data
+FIND_TIMEOUT = env.float('FIND_TIMEOUT', 6.0)    # Timeout for metric find requests
+FETCH_TIMEOUT = env.float('FETCH_TIMEOUT', 3.0)  # Timeout to fetch series data
 
 #####################################
 # Filesystem Paths #
@@ -361,9 +361,9 @@ DATABASES = {
 # You *should* use 127.0.0.1 here in most cases.
 #
 CARBONLINK_HOSTS = env.list('CARBONLINK_HOSTS', default=["127.0.0.1:7002:a"])
-#CARBONLINK_TIMEOUT = 1.0
-#CARBONLINK_RETRY_DELAY = 15 # Seconds to blacklist a failed remote server
-#
+CARBONLINK_TIMEOUT = env.float('CARBONLINK_TIMEOUT', 1.0)
+CARBONLINK_RETRY_DELAY = env.int('CARBONLINK_RETRY_DELAY', 15) # Seconds to blacklist a failed remote server
+
 
 # Type of metric hashing function.
 # The default `carbon_ch` is Graphite's traditional consistent-hashing implementation.
