@@ -31,14 +31,13 @@ steps:
     registry: quay.io
     repo: quay.io/presslabs/graphite-web
     tags:
-    - latest
+    - ${DRONE_TAG:-${DRONE_BRANCH/master/latest}}
+    - ${DRONE_COMMIT_SHA:0:8}
     username: presslabs+drone
   environment:
     DOCKER_PASSWORD:
       from_secret: QUAY_TOKEN
   when:
-    branch:
-    - master
     event:
     - push
 
@@ -52,19 +51,18 @@ steps:
     registry: quay.io
     repo: quay.io/presslabs/go-carbon
     tags:
-    - latest
+    - ${DRONE_TAG:-${DRONE_BRANCH/master/latest}}
+    - ${DRONE_COMMIT_SHA:0:8}
     username: presslabs+drone
   environment:
     DOCKER_PASSWORD:
       from_secret: QUAY_TOKEN
   when:
-    branch:
-    - master
     event:
     - push
 
 ---
 kind: signature
-hmac: 6492dd271d7a80b1900cbe25dd62c44770e11743d32567209b591a3c1c1910b7
+hmac: cdb4f35574cd0fc9e36b91e5bc1a39d26ac26bc9446a4920ec938fac577f7769
 
 ...
