@@ -63,4 +63,8 @@ steps:
     event:
     - push
 
+---
+kind: signature
+hmac: 6492dd271d7a80b1900cbe25dd62c44770e11743d32567209b591a3c1c1910b7
+
 ...
