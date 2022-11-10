@@ -1,42 +1,66 @@
+---
+kind: pipeline
+name: default
+
+platform:
+  os: linux
+  arch: amd64
+
+clone:
+  disable: true
+
 workspace:
   base: /root/go
   path: src/github.com/presslabs/dashboard
 
-clone:
-  git:
-    image: plugins/git
+steps:
+- name: git
+  pull: if-not-exists
+  image: plugins/git
+  settings:
     depth: 100
     tags: true
 
-pipeline:
-  publish-graphite-web:
-    group: publish
-    image: plugins/docker
+- name: publish-graphite-web
+  pull: if-not-exists
+  image: plugins/docker
+  settings:
     context: graphite-web
     dockerfile: graphite-web/Dockerfile
+    group: publish
     registry: quay.io
     repo: quay.io/presslabs/graphite-web
-    tags: [ "latest" ]
+    tags:
+    - latest
     username: presslabs+drone
-    secrets:
-      - source: QUAY_TOKEN
-        target: DOCKER_PASSWORD
-    when:
-      branch: master
-      event: push
+  environment:
+    DOCKER_PASSWORD:
+      from_secret: QUAY_TOKEN
+  when:
+    branch:
+    - master
+    event:
+    - push
 
-  publish-go-carbon:
-    group: publish
-    image: plugins/docker
+- name: publish-go-carbon
+  pull: if-not-exists
+  image: plugins/docker
+  settings:
     context: go-carbon
     dockerfile: go-carbon/Dockerfile
+    group: publish
     registry: quay.io
     repo: quay.io/presslabs/go-carbon
-    tags: [ "latest" ]
+    tags:
+    - latest
     username: presslabs+drone
-    secrets:
-      - source: QUAY_TOKEN
-        target: DOCKER_PASSWORD
-    when:
-      branch: master
-      event: push
+  environment:
+    DOCKER_PASSWORD:
+      from_secret: QUAY_TOKEN
+  when:
+    branch:
+    - master
+    event:
+    - push
+
+...
