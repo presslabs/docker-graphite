@@ -1,5 +1,5 @@
 FROM buildpack-deps as build
-ENV GO_CARBON_VERSION=0.16.2
+ENV GO_CARBON_VERSION=0.17.1
 
 RUN set -ex \
     && wget -O/go-carbon_amd64.deb https://github.com/go-graphite/go-carbon/releases/download/v${GO_CARBON_VERSION}/go-carbon_${GO_CARBON_VERSION}_amd64.deb
